@@ -2,4 +2,5 @@
     <string name="app_name">MyDieRoller1a</string>
     <string name="roll">Roll</string>
     <string name="space" />
+    <string name="rolled">Rolled</string>
 </resources>
