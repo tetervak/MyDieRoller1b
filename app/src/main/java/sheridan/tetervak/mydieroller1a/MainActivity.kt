@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import sheridan.tetervak.mydieroller1a.databinding.ActivityMainBinding
+import sheridan.tetervak.mydieroller1a.model.Die
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         const val RESULT = "Result"
     }
 
-    private var dieValue : Int = 0
+    private var die = Die()
 
     private lateinit var binding : ActivityMainBinding
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             val savedResult : Int = savedInstanceState.getInt(RESULT)
             if(savedResult > 0){
                 binding.result.text = savedResult.toString()
-                dieValue = savedResult
+                die.value = savedResult
             }
         }
 
@@ -37,15 +38,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onRoll() {
-        dieValue = (1..6).random()
-        binding.result.text = dieValue.toString()
+        die.roll()
+        binding.result.text = die.value.toString()
         Toast.makeText(this, getString(R.string.rolled), Toast.LENGTH_LONG).show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if(dieValue > 0){
-            outState.putInt(RESULT, dieValue)
+        if(die.value > 0){
+            outState.putInt(RESULT, die.value)
         }
     }
 }
