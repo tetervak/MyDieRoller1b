@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import sheridan.tetervak.mydieroller1a.databinding.ActivityMainBinding
 import sheridan.tetervak.mydieroller1a.model.Die
 
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         const val RESULT = "Result"
     }
 
-    private var die = Die()
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var binding : ActivityMainBinding
 
@@ -23,12 +24,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if(savedInstanceState is Bundle){
-            val savedResult : Int = savedInstanceState.getInt(RESULT)
-            if(savedResult > 0){
-                binding.result.text = savedResult.toString()
-                die.value = savedResult
-            }
+        if(viewModel.die.value > 0){
+            binding.result.text = viewModel.die.value.toString()
         }
 
         binding.rollButton.setOnClickListener {
@@ -38,15 +35,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onRoll() {
-        die.roll()
-        binding.result.text = die.value.toString()
+        viewModel.die.roll()
+        binding.result.text = viewModel.die.value.toString()
         Toast.makeText(this, getString(R.string.rolled), Toast.LENGTH_LONG).show()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        if(die.value > 0){
-            outState.putInt(RESULT, die.value)
-        }
-    }
 }
