@@ -3,6 +3,8 @@ package sheridan.tetervak.mydieroller1a
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import sheridan.tetervak.mydieroller1a.model.Die
 
 class MainViewModel : ViewModel(){
@@ -13,7 +15,9 @@ class MainViewModel : ViewModel(){
     val dieValue: LiveData<Int> = _dieValue
 
     fun roll(){
-        die.roll()
-        _dieValue.value = die.value
+        viewModelScope.launch {
+            die.roll()
+            _dieValue.value = die.value
+        }
     }
 }
