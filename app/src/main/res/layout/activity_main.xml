@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="sheridan.tetervak.mydieroller1a.MainViewModel"/>
+        <variable
+            name="viewModel"
+            type="MainViewModel" />
     </data>
 
     <LinearLayout
@@ -33,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_gap"
-            android:text="@string/roll" />
+            android:text="@string/roll"
+            android:onClick="@{()->viewModel.roll()}"/>
 
         <Space
             android:layout_width="match_parent"
